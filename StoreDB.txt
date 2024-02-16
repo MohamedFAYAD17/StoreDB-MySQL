@@ -1,0 +1,86 @@
+Microsoft Windows [Version 10.0.19045.4046]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\hp>mysql --version
+mysql  Ver 8.0.19 for Win64 on x86_64 (MySQL Community Server - GPL)
+
+C:\Users\hp>mysql -u root -p
+Enter password: ***********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.19 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database StoreDB ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| bdtest             |
+| centreformation    |
+| information_schema |
+| mohamedf           |
+| mydb               |
+| mysql              |
+| performance_schema |
+| primarykey         |
+| sakila             |
+| storedb            |
+| sys                |
+| test               |
+| txt                |
+| world              |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> use storedb ;
+Database changed
+mysql> create table clients (
+    -> id_client int primary key ,
+    -> nom varchar(15) ,
+    -> prenom varchar(15) ,
+    -> email varchar(25) ,
+    -> adresse varchar(40) ,
+    -> telephone varchar(20)
+    -> );
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> create table produits (
+    -> id_produit int primary key ,
+    -> nom varchar(15) ,
+    -> description text ,
+    -> prix int ,
+    -> stock int
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table commandes (
+    -> id_commande int primary key ,
+    -> id_client int ,
+    -> date_commande date ,
+    -> statut varchar(20) ,
+    -> total int ,
+    -> foreign key (id_client) references clients(id_client)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> alter table commandes
+    -> add constraint check_statut check  (statut in ('en cours', 'livrée', 'annulée'));
+Query OK, 0 rows affected (0.20 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table commandes
+    -> alter column statut set default 'en cours';
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
